@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../constants/destinations.dart';
 import '../providers/page_controller_provider.dart';
 import '../providers/selected_index_provider.dart';
-import '../views/home_page.dart';
-import '../views/jam_page.dart';
-import '../views/songbook_page.dart';
 
 class CustomNavigationBar extends ConsumerWidget {
   const CustomNavigationBar({
@@ -24,23 +22,13 @@ class CustomNavigationBar extends ConsumerWidget {
         //     duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
       },
       selectedIndex: selectedIndex,
-      destinations: const [
-        NavigationDestination(
-          selectedIcon: Icon(Icons.home),
-          icon: Icon(Icons.home_outlined),
-          label: 'Strona główna',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.book_online),
-          icon: Icon(Icons.book_online_outlined),
-          label: 'Śpiewnik',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.music_note),
-          icon: Icon(Icons.music_note_outlined),
-          label: 'Uwielbiajmy Razem',
-        ),
-      ],
+      destinations: destinations.map((destination) {
+        return NavigationDestination(
+          selectedIcon: Icon(destination.selectedIcon),
+          icon: Icon(destination.icon),
+          label: destination.label,
+        );
+      }).toList(),
     );
   }
 }

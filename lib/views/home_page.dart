@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uwielbiajmy_go/providers/title_provider.dart';
 
+import '../constants/destinations.dart';
 import '../providers/page_controller_provider.dart';
 import '../providers/pages_provider.dart';
 import '../providers/selected_index_provider.dart';
@@ -24,19 +25,22 @@ class HomePage extends ConsumerWidget {
               'Uwiebiajmy Go!',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            HomeCard(
-                image: AssetImage('assets/images/ukulele.jpg'),
-                title: 'Songbook',
-                index: 1),
-            SizedBox(height: 20),
-            HomeCard(
-                image: AssetImage('assets/images/ukulele.jpg'),
-                title: 'Jam',
-                index: 2),
-            HomeCard(
-                image: AssetImage('assets/images/ukulele.jpg'),
-                title: 'Jam',
-                index: 2),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Znajdź miejsce, w którym możesz uwielbiać Boga!',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Column(
+              children: destinations.skip(1).map((destination) {
+                return HomeCard(
+                  title: destination.label,
+                  image: AssetImage(destination.imagePath),
+                  index: destinations.indexOf(destination),
+                );
+              }).toList(),
+            )
           ],
         ),
       ),
@@ -65,8 +69,8 @@ class HomeCard extends ConsumerWidget {
             return Column(
               children: [
                 Container(
-                  height: constraints.maxWidth * 0.5, // 80% of parent width
-                  width: constraints.maxWidth,
+                  //height: constraints.maxWidth * 0.5, // 80% of parent width
+                  // width: constraints.maxWidth,
                   padding: EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),

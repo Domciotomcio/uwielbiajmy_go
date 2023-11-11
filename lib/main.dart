@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'providers/floating_action_button_provider.dart';
 import 'providers/page_controller_provider.dart';
 import 'providers/pages_provider.dart';
 import 'providers/selected_index_provider.dart';
@@ -18,10 +19,10 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedIndex = ref.watch(selectedIndexProvider);
     final pageController = ref.watch(pageControllerProvider);
     final pages = ref.watch(pagesProvider);
     final title = ref.watch(titleProvider);
+    final floatingActionButton = ref.watch(floatingActionButtonProvider);
 
     ref.listen<int>(selectedIndexProvider, (previous, next) {
       pageController.animateToPage(
@@ -40,11 +41,19 @@ class MyApp extends ConsumerWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(title),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.connect_without_contact),
+            ),
+          ],
         ),
         body: PageView(
           controller: pageController,
           children: pages,
         ),
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: CustomNavigationBar(),
       ),
     );
