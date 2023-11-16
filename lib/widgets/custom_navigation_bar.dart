@@ -18,8 +18,6 @@ class CustomNavigationBar extends ConsumerWidget {
     return NavigationBar(
       onDestinationSelected: (int index) {
         ref.read(selectedIndexProvider.notifier).state = index;
-        // pageController.animateToPage(index,
-        //     duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
       },
       selectedIndex: selectedIndex,
       destinations: destinations.map((destination) {
