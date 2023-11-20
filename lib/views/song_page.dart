@@ -7,8 +7,9 @@ import '../models/song.dart';
 class ActiveView {
   final String viewName;
   final Icon viewIcon;
+  final Widget Function(Song song) viewBuilder;
 
-  ActiveView(this.viewName, this.viewIcon);
+  ActiveView(this.viewName, this.viewIcon, this.viewBuilder);
 }
 
 class SongPage extends StatefulWidget {
@@ -21,9 +22,12 @@ class SongPage extends StatefulWidget {
 }
 
 List<ActiveView> activeViewOptions = [
-  ActiveView("Chords", Icon(Icons.music_note)),
-  ActiveView("Lyrics", Icon(Icons.text_fields)),
-  ActiveView("Combined", Icon(Icons.format_align_left)),
+  ActiveView("Chords", Icon(Icons.music_note),
+      (Song song) => SongChordsWidget(song: song)),
+  ActiveView("Lyrics", Icon(Icons.text_fields),
+      (Song song) => SongLyricsWidget(song: song)),
+  ActiveView("Combined", Icon(Icons.format_align_left),
+      (Song song) => SongCombinedWidget(song: song)),
 ];
 
 class _SongPageState extends State<SongPage> {
@@ -38,26 +42,9 @@ class _SongPageState extends State<SongPage> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.song.title,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              SizedBox(height: 8),
-              //Text('Artysta: ${widget.song.artist}'),
-              // Możesz dodać więcej szczegółów piosenki
-
-              SizedBox(height: 16),
-
-              // Wyświetl tekst piosenki
-              if (activeView.viewName == "Chords")
-                SongChordsWidget(song: widget.song),
-              if (activeView.viewName == "Lyrics")
-                SongLyricsWidget(song: widget.song),
-              if (activeView.viewName == "Combined")
-                SongCombinedWidget(song: widget.song),
-            ],
-          ),
+          child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              child: activeView.viewBuilder(widget.song)),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -70,8 +57,28 @@ class _SongPageState extends State<SongPage> {
           });
         },
         child: activeView.viewIcon,
-        //child: activeView.viewIcon,
       ),
+    );
+  }
+
+  Widget getViewForActiveOption() {
+    Widget currentView;
+    switch (activeView.viewName) {
+      case "Chords":
+        currentView = SongChordsWidget(song: widget.song);
+        break;
+      case "Lyrics":
+        currentView = SongLyricsWidget(song: widget.song);
+        break;
+      default: // "Combined"
+        currentView = SongCombinedWidget(song: widget.song);
+        break;
+    }
+
+    return ConstrainedBox(
+      constraints:
+          BoxConstraints(minHeight: 200), // Adjust the height as needed
+      child: currentView,
     );
   }
 }
@@ -164,7 +171,8 @@ class SongCombinedWidget extends StatelessWidget {
                 SizedBox(width: 8),
                 Expanded(
                   flex: 1,
-                  child: Text(chordLine),
+                  child: Text(chordLine,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
