@@ -15,13 +15,18 @@ List<Destination> destinations = [
     floatingActionButton: null,
   ),
   Destination(
-    selectedIcon: Icons.book_online,
-    icon: Icons.book_online_outlined,
-    label: 'Śpiewnik',
-    page: SongbookPage(),
-    title: 'Śpiewnik',
-    floatingActionButton: null,
-  ),
+      selectedIcon: Icons.book_online,
+      icon: Icons.book_online_outlined,
+      label: 'Śpiewnik',
+      page: SongbookPage(),
+      title: 'Śpiewnik',
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("Dodaj piosenkę");
+        },
+        child: const Icon(Icons.add),
+        
+      )),
   Destination(
     selectedIcon: Icons.music_note,
     icon: Icons.music_note_outlined,
