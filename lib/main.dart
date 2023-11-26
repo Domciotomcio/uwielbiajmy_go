@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'constants/destinations.dart';
 import 'providers/floating_action_button_provider.dart';
 import 'providers/page_controller_provider.dart';
 import 'providers/pages_provider.dart';
 import 'providers/selected_index_provider.dart';
 import 'providers/title_provider.dart';
-import 'views/jam_page.dart';
 import 'widgets/custom_navigation_bar.dart';
 
 void main() {
@@ -30,6 +30,9 @@ class MyApp extends ConsumerWidget {
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+
+      ref.read(titleProvider.notifier).state = menuDestinations[next].label;
+
     });
 
     return MaterialApp(

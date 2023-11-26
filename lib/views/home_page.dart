@@ -10,10 +10,6 @@ import '../providers/selected_index_provider.dart';
 class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      ref.read(titleProvider.notifier).state = 'Strona Główna';
-    });
-
     var pageController = ref.read(pageControllerProvider);
 
     return Padding(
@@ -33,11 +29,11 @@ class HomePage extends ConsumerWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             Column(
-              children: destinations.skip(1).map((destination) {
+              children: menuDestinations.skip(1).map((destination) {
                 return HomeCard(
                   title: destination.label,
                   image: AssetImage(destination.imagePath),
-                  index: destinations.indexOf(destination),
+                  index: menuDestinations.indexOf(destination),
                 );
               }).toList(),
             )

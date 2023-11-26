@@ -7,4 +7,4 @@ import '../views/jam_page.dart';
 import '../views/songbook_page.dart';
 
 final pagesProvider = Provider<List<Widget>>(
-    (ref) => destinations.map((destination) => destination.page).toList());
+    (ref) => menuDestinations.map((destination) => destination.page).toList());

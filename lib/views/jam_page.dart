@@ -29,9 +29,9 @@ class JamPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      ref.read(titleProvider.notifier).state = 'Uiwelbiajmy Razem';
-    });
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   ref.read(titleProvider.notifier).state = 'Uiwelbiajmy Razem';
+    // });
 
     List<String> basicChords = ['C', 'D', 'E', 'F', 'G', 'A', 'H'];
     List<String> upChords = ['C#', 'D#', 'F#', 'G#', 'A#'];

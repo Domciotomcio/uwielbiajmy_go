@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../models/destination.dart';
+import '../views/create_song_page.dart';
 import '../views/home_page.dart';
 import '../views/jam_page.dart';
 import '../views/songbook_page.dart';
 
-List<Destination> destinations = [
+List<Destination> menuDestinations = [
   Destination(
     selectedIcon: Icons.home,
     icon: Icons.home_outlined,
-    label: 'Strona główna',
+    label: 'Strona Główna',
     page: HomePage(),
-    title: 'Strona główna',
+    title: 'Strona Główna',
     floatingActionButton: null,
   ),
   Destination(
@@ -20,13 +21,7 @@ List<Destination> destinations = [
       label: 'Śpiewnik',
       page: SongbookPage(),
       title: 'Śpiewnik',
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print("Dodaj piosenkę");
-        },
-        child: const Icon(Icons.add),
-        
-      )),
+      floatingActionButton: SongbookFloatingActionButton()),
   Destination(
     selectedIcon: Icons.music_note,
     icon: Icons.music_note_outlined,
@@ -37,3 +32,18 @@ List<Destination> destinations = [
   ),
   // add more destinations here
 ];
+
+Map<String, String> ChordsUp = {
+  'C': 'C#',
+  'C#': 'D',
+  'D': 'D#',
+  'D#': 'E',
+  'E': 'F',
+  'F': 'F#',
+  'F#': 'G',
+  'G': 'G#',
+  'G#': 'A',
+  'A': 'A#',
+  'A#': 'H',
+  'H': 'C',
+};

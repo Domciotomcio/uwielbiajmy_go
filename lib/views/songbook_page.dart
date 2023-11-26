@@ -3,6 +3,7 @@ import '../providers/song_list_provider.dart';
 import '../providers/title_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'create_song_page.dart';
 import 'song_page.dart';
 
 class SongbookPage extends ConsumerWidget {
@@ -26,5 +27,17 @@ class SongbookPage extends ConsumerWidget {
         );
       },
     );
+  }
+}
+
+class SongbookFloatingActionButton extends ConsumerWidget {
+  const SongbookFloatingActionButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return FloatingActionButton(onPressed:() {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateSongPage()));
+      print("Dodaj piosenkę");
+    }, child: Icon(Icons.add));
   }
 }

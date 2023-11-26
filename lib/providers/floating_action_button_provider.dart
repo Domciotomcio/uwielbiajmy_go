@@ -7,5 +7,5 @@ import 'selected_index_provider.dart';
 
 final floatingActionButtonProvider = Provider<Widget?>((ref) {
   final selectedIndex = ref.watch(selectedIndexProvider);
-  return destinations[selectedIndex].floatingActionButton;
+  return menuDestinations[selectedIndex].floatingActionButton;
 });

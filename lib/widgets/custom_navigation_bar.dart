@@ -20,7 +20,7 @@ class CustomNavigationBar extends ConsumerWidget {
         ref.read(selectedIndexProvider.notifier).state = index;
       },
       selectedIndex: selectedIndex,
-      destinations: destinations.map((destination) {
+      destinations: menuDestinations.map((destination) {
         return NavigationDestination(
           selectedIcon: Icon(destination.selectedIcon),
           icon: Icon(destination.icon),
