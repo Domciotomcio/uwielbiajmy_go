@@ -32,7 +32,6 @@ class MyApp extends ConsumerWidget {
       );
 
       ref.read(titleProvider.notifier).state = menuDestinations[next].label;
-
     });
 
     return MaterialApp(

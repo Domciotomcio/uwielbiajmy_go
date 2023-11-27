@@ -14,38 +14,33 @@ class HomePage extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Column(
+      child: Column(
+          // children: menuDestinations.skip(1).map((destination) {
+          //   return HomeMyCard(
+          //     title: destination.label,
+          //     image: AssetImage(destination.imagePath),
+          //     index: menuDestinations.indexOf(destination),
+          //   );
+          // }).toList(),
           children: [
-            Text(
-              'Uwiebiajmy Go!',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Expanded(
+              child: ListView(
+                children: menuDestinations.skip(1).map((destination) {
+                  return HomeMyCard(
+                    title: destination.label,
+                    image: AssetImage(destination.imagePath),
+                    index: menuDestinations.indexOf(destination),
+                  );
+                }).toList(),
+              ),
             ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Znajdź miejsce, w którym możesz uwielbiać Boga!',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Column(
-              children: menuDestinations.skip(1).map((destination) {
-                return HomeCard(
-                  title: destination.label,
-                  image: AssetImage(destination.imagePath),
-                  index: menuDestinations.indexOf(destination),
-                );
-              }).toList(),
-            )
-          ],
-        ),
-      ),
+          ]),
     );
   }
 }
 
-class HomeCard extends ConsumerWidget {
-  const HomeCard({
+class HomeMyCard extends ConsumerWidget {
+  const HomeMyCard({
     Key? key,
     required this.title,
     required this.image,
@@ -59,33 +54,23 @@ class HomeCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
+      clipBehavior: Clip.hardEdge,
       child: InkWell(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              children: [
-                Container(
-                  //height: constraints.maxWidth * 0.5, // 80% of parent width
-                  // width: constraints.maxWidth,
-                  padding: EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image(
-                      image: AssetImage('assets/images/ukulele.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(title),
-                ),
-              ],
-            );
-          },
-        ),
+        splashColor: Theme.of(context).colorScheme.secondary.withAlpha(30),
         onTap: () {
           ref.read(selectedIndexProvider.notifier).state = index;
         },
+        child: Column(
+          children: [
+            Image(
+              image: image,
+              fit: BoxFit.cover,
+            ),
+            ListTile(
+              title: Text(title),
+            ),
+          ],
+        ),
       ),
     );
   }

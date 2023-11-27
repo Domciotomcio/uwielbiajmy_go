@@ -5,6 +5,7 @@ import '../views/create_song_page.dart';
 import '../views/home_page.dart';
 import '../views/jam_page.dart';
 import '../views/songbook_page.dart';
+import '../views/worship_page.dart';
 
 List<Destination> menuDestinations = [
   Destination(
@@ -23,14 +24,20 @@ List<Destination> menuDestinations = [
       title: 'Śpiewnik',
       floatingActionButton: SongbookFloatingActionButton()),
   Destination(
-    selectedIcon: Icons.music_note,
-    icon: Icons.music_note_outlined,
-    label: 'Uwielbiajmy Razem',
+    selectedIcon: Icons.piano,
+    icon: Icons.piano_outlined,
+    label: 'Akordy',
     page: JamPage(),
-    title: 'Uwielbiajmy Razem',
+    title: 'Akordy',
     floatingActionButton: JamFloatingActionButton(),
   ),
-  // add more destinations here
+  Destination(
+    selectedIcon: Icons.music_note,
+    icon: Icons.music_note_outlined,
+    label: 'Uwielbienie',
+    page: WorshipPage(),
+    title: 'Uwielbienie',
+  )
 ];
 
 Map<String, String> ChordsUp = {

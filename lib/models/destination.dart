@@ -18,6 +18,6 @@ class Destination {
     required this.page,
     required this.title,
     this.floatingActionButton,
-    this.imagePath = 'assets/images/ukulele.png',
+    this.imagePath = 'assets/images/ukulele.jpg',
   });
 }
