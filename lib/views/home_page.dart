@@ -13,29 +13,24 @@ class HomePage extends ConsumerWidget {
     var pageController = ref.read(pageControllerProvider);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-          // children: menuDestinations.skip(1).map((destination) {
-          //   return HomeMyCard(
-          //     title: destination.label,
-          //     image: AssetImage(destination.imagePath),
-          //     index: menuDestinations.indexOf(destination),
-          //   );
-          // }).toList(),
-          children: [
-            Expanded(
-              child: ListView(
-                children: menuDestinations.skip(1).map((destination) {
-                  return HomeMyCard(
-                    title: destination.label,
-                    image: AssetImage(destination.imagePath),
-                    index: menuDestinations.indexOf(destination),
-                  );
-                }).toList(),
-              ),
-            ),
-          ]),
-    );
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 4 / 5.2, // Adjust the aspect ratio as needed
+            crossAxisSpacing: 10, // Space between columns
+            mainAxisSpacing: 10, // Space between rows
+          ),
+          itemCount: menuDestinations.skip(1).length,
+          itemBuilder: (context, index) {
+            var destination = menuDestinations.skip(1).elementAt(index);
+            return HomeMyCard(
+              title: destination.label,
+              image: AssetImage(destination.imagePath),
+              index: menuDestinations.indexOf(destination),
+            );
+          },
+        ));
   }
 }
 
@@ -54,20 +49,26 @@ class HomeMyCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         splashColor: Theme.of(context).colorScheme.secondary.withAlpha(30),
         onTap: () {
           ref.read(selectedIndexProvider.notifier).state = index;
         },
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Image(
-              image: image,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image(
+                image: image,
+                fit: BoxFit.cover,
+              ),
             ),
-            ListTile(
-              title: Text(title),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(title, textAlign: TextAlign.left),
             ),
           ],
         ),

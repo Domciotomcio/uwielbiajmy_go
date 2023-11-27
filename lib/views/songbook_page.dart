@@ -35,9 +35,12 @@ class SongbookFloatingActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return FloatingActionButton(onPressed:() {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateSongPage()));
-      print("Dodaj piosenkę");
-    }, child: Icon(Icons.add));
+    return FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => CreateSongPage()));
+          print("Dodaj piosenkę");
+        },
+        child: Icon(Icons.add));
   }
 }

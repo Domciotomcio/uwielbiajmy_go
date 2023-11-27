@@ -42,9 +42,11 @@ class _SongPageState extends State<SongPage> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              child: activeView.viewBuilder(widget.song)),
+          child: Container(
+            child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: activeView.viewBuilder(widget.song)),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
