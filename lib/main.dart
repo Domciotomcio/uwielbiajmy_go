@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'constants/destinations.dart';
 import 'providers/floating_action_button_provider.dart';
 import 'providers/page_controller_provider.dart';
@@ -9,14 +12,18 @@ import 'providers/selected_index_provider.dart';
 import 'providers/title_provider.dart';
 import 'widgets/custom_navigation_bar.dart';
 
-void main() {
-  runApp(ProviderScope(child: MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = ref.watch(pageControllerProvider);
@@ -27,7 +34,7 @@ class MyApp extends ConsumerWidget {
     ref.listen<int>(selectedIndexProvider, (previous, next) {
       pageController.animateToPage(
         next,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
 
@@ -46,7 +53,7 @@ class MyApp extends ConsumerWidget {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.connect_without_contact),
+              icon: const Icon(Icons.connect_without_contact),
             ),
           ],
         ),
@@ -56,7 +63,7 @@ class MyApp extends ConsumerWidget {
         ),
         floatingActionButton: floatingActionButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: CustomNavigationBar(),
+        bottomNavigationBar: const CustomNavigationBar(),
       ),
     );
   }

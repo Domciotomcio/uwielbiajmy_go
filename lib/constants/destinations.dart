@@ -12,24 +12,28 @@ List<Destination> menuDestinations = [
     selectedIcon: Icons.home,
     icon: Icons.home_outlined,
     label: 'Strona Główna',
-    page: HomePage(),
+    page: const HomePage(),
     title: 'Strona Główna',
     floatingActionButton: null,
+    imagePath: 'assets/images/home.png',
   ),
   Destination(
-      selectedIcon: Icons.book_online,
-      icon: Icons.book_online_outlined,
-      label: 'Śpiewnik',
-      page: SongbookPage(),
-      title: 'Śpiewnik',
-      floatingActionButton: SongbookFloatingActionButton()),
+    selectedIcon: Icons.book_online,
+    icon: Icons.book_online_outlined,
+    label: 'Śpiewnik',
+    page: const SongbookPage(),
+    title: 'Śpiewnik',
+    floatingActionButton: const SongbookFloatingActionButton(),
+    imagePath: 'assets/images/songbook.jpg',
+  ),
   Destination(
     selectedIcon: Icons.piano,
     icon: Icons.piano_outlined,
     label: 'Akordy',
-    page: JamPage(),
+    page: const JamPage(),
     title: 'Akordy',
-    floatingActionButton: JamFloatingActionButton(),
+    floatingActionButton: const JamFloatingActionButton(),
+    imagePath: 'assets/images/jamming.jpg',
   ),
   Destination(
     selectedIcon: Icons.music_note,
@@ -37,10 +41,11 @@ List<Destination> menuDestinations = [
     label: 'Uwielbienie',
     page: WorshipPage(),
     title: 'Uwielbienie',
+    imagePath: 'assets/images/worship.jpg',
   )
 ];
 
-Map<String, String> ChordsUp = {
+Map<String, String> chordsUp = {
   'C': 'C#',
   'C#': 'D',
   'D': 'D#',

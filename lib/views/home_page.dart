@@ -8,6 +8,8 @@ import '../providers/pages_provider.dart';
 import '../providers/selected_index_provider.dart';
 
 class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var pageController = ref.read(pageControllerProvider);
@@ -15,7 +17,7 @@ class HomePage extends ConsumerWidget {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 4 / 5.2, // Adjust the aspect ratio as needed
             crossAxisSpacing: 10, // Space between columns

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../providers/song_list_provider.dart';
-import '../providers/title_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'create_song_page.dart';
 import 'song_page.dart';
 
 class SongbookPage extends ConsumerWidget {
+  const SongbookPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final songList = ref.watch(songListProvider);
@@ -41,6 +42,6 @@ class SongbookFloatingActionButton extends ConsumerWidget {
               .push(MaterialPageRoute(builder: (context) => CreateSongPage()));
           print("Dodaj piosenkę");
         },
-        child: Icon(Icons.add));
+        child: const Icon(Icons.add));
   }
 }
