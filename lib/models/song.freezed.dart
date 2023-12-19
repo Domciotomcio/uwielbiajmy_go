@@ -20,14 +20,14 @@ Song _$SongFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Song {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get key => throw _privateConstructorUsedError;
-  String get artist => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
-  String get tempo => throw _privateConstructorUsedError;
-  int get bpm => throw _privateConstructorUsedError;
-  String get songbookNumber => throw _privateConstructorUsedError;
+  String? get key => throw _privateConstructorUsedError;
+  String? get artist => throw _privateConstructorUsedError;
+  String? get language => throw _privateConstructorUsedError;
+  String? get tempo => throw _privateConstructorUsedError;
+  int? get bpm => throw _privateConstructorUsedError;
+  String? get songbookNumber => throw _privateConstructorUsedError;
   List<String> get sections => throw _privateConstructorUsedError;
   Map<String, List<String>> get lyrics => throw _privateConstructorUsedError;
   Map<String, List<String>> get chords => throw _privateConstructorUsedError;
@@ -43,14 +43,14 @@ abstract class $SongCopyWith<$Res> {
       _$SongCopyWithImpl<$Res, Song>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String title,
-      String key,
-      String artist,
-      String language,
-      String tempo,
-      int bpm,
-      String songbookNumber,
+      String? key,
+      String? artist,
+      String? language,
+      String? tempo,
+      int? bpm,
+      String? songbookNumber,
       List<String> sections,
       Map<String, List<String>> lyrics,
       Map<String, List<String>> chords});
@@ -69,51 +69,51 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
-    Object? key = null,
-    Object? artist = null,
-    Object? language = null,
-    Object? tempo = null,
-    Object? bpm = null,
-    Object? songbookNumber = null,
+    Object? key = freezed,
+    Object? artist = freezed,
+    Object? language = freezed,
+    Object? tempo = freezed,
+    Object? bpm = freezed,
+    Object? songbookNumber = freezed,
     Object? sections = null,
     Object? lyrics = null,
     Object? chords = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      key: null == key
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
-              as String,
-      artist: null == artist
+              as String?,
+      artist: freezed == artist
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
+              as String?,
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      tempo: null == tempo
+              as String?,
+      tempo: freezed == tempo
           ? _value.tempo
           : tempo // ignore: cast_nullable_to_non_nullable
-              as String,
-      bpm: null == bpm
+              as String?,
+      bpm: freezed == bpm
           ? _value.bpm
           : bpm // ignore: cast_nullable_to_non_nullable
-              as int,
-      songbookNumber: null == songbookNumber
+              as int?,
+      songbookNumber: freezed == songbookNumber
           ? _value.songbookNumber
           : songbookNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sections: null == sections
           ? _value.sections
           : sections // ignore: cast_nullable_to_non_nullable
@@ -138,14 +138,14 @@ abstract class _$$SongImplCopyWith<$Res> implements $SongCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String title,
-      String key,
-      String artist,
-      String language,
-      String tempo,
-      int bpm,
-      String songbookNumber,
+      String? key,
+      String? artist,
+      String? language,
+      String? tempo,
+      int? bpm,
+      String? songbookNumber,
       List<String> sections,
       Map<String, List<String>> lyrics,
       Map<String, List<String>> chords});
@@ -161,51 +161,51 @@ class __$$SongImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
-    Object? key = null,
-    Object? artist = null,
-    Object? language = null,
-    Object? tempo = null,
-    Object? bpm = null,
-    Object? songbookNumber = null,
+    Object? key = freezed,
+    Object? artist = freezed,
+    Object? language = freezed,
+    Object? tempo = freezed,
+    Object? bpm = freezed,
+    Object? songbookNumber = freezed,
     Object? sections = null,
     Object? lyrics = null,
     Object? chords = null,
   }) {
     return _then(_$SongImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      key: null == key
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
-              as String,
-      artist: null == artist
+              as String?,
+      artist: freezed == artist
           ? _value.artist
           : artist // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
+              as String?,
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      tempo: null == tempo
+              as String?,
+      tempo: freezed == tempo
           ? _value.tempo
           : tempo // ignore: cast_nullable_to_non_nullable
-              as String,
-      bpm: null == bpm
+              as String?,
+      bpm: freezed == bpm
           ? _value.bpm
           : bpm // ignore: cast_nullable_to_non_nullable
-              as int,
-      songbookNumber: null == songbookNumber
+              as int?,
+      songbookNumber: freezed == songbookNumber
           ? _value.songbookNumber
           : songbookNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sections: null == sections
           ? _value._sections
           : sections // ignore: cast_nullable_to_non_nullable
@@ -226,14 +226,14 @@ class __$$SongImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SongImpl with DiagnosticableTreeMixin implements _Song {
   const _$SongImpl(
-      {required this.id,
+      {this.id,
       required this.title,
-      required this.key,
-      required this.artist,
-      required this.language,
-      required this.tempo,
-      required this.bpm,
-      required this.songbookNumber,
+      this.key,
+      this.artist,
+      this.language,
+      this.tempo,
+      this.bpm,
+      this.songbookNumber,
       required final List<String> sections,
       required final Map<String, List<String>> lyrics,
       required final Map<String, List<String>> chords})
@@ -245,21 +245,21 @@ class _$SongImpl with DiagnosticableTreeMixin implements _Song {
       _$$SongImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final String title;
   @override
-  final String key;
+  final String? key;
   @override
-  final String artist;
+  final String? artist;
   @override
-  final String language;
+  final String? language;
   @override
-  final String tempo;
+  final String? tempo;
   @override
-  final int bpm;
+  final int? bpm;
   @override
-  final String songbookNumber;
+  final String? songbookNumber;
   final List<String> _sections;
   @override
   List<String> get sections {
@@ -359,14 +359,14 @@ class _$SongImpl with DiagnosticableTreeMixin implements _Song {
 
 abstract class _Song implements Song {
   const factory _Song(
-      {required final String id,
+      {final String? id,
       required final String title,
-      required final String key,
-      required final String artist,
-      required final String language,
-      required final String tempo,
-      required final int bpm,
-      required final String songbookNumber,
+      final String? key,
+      final String? artist,
+      final String? language,
+      final String? tempo,
+      final int? bpm,
+      final String? songbookNumber,
       required final List<String> sections,
       required final Map<String, List<String>> lyrics,
       required final Map<String, List<String>> chords}) = _$SongImpl;
@@ -374,21 +374,21 @@ abstract class _Song implements Song {
   factory _Song.fromJson(Map<String, dynamic> json) = _$SongImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   String get title;
   @override
-  String get key;
+  String? get key;
   @override
-  String get artist;
+  String? get artist;
   @override
-  String get language;
+  String? get language;
   @override
-  String get tempo;
+  String? get tempo;
   @override
-  int get bpm;
+  int? get bpm;
   @override
-  String get songbookNumber;
+  String? get songbookNumber;
   @override
   List<String> get sections;
   @override

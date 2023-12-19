@@ -7,18 +7,28 @@ part 'song.g.dart';
 @freezed
 class Song with _$Song {
   const factory Song({
-    required String id,
+    String? id,
     required String title,
-    required String key,
-    required String artist,
-    required String language,
-    required String tempo,
-    required int bpm,
-    required String songbookNumber,
+    String? key,
+    String? artist,
+    String? language,
+    String? tempo,
+    int? bpm,
+    String? songbookNumber,
     required List<String> sections,
     required Map<String, List<String>> lyrics,
     required Map<String, List<String>> chords,
   }) = _Song;
+
+  factory Song.empty() => const Song(
+        title: '',
+        sections: [],
+        lyrics: {},
+        chords: {},
+      );
+
+  // Factory method to create a new instance of Song with a specified ID
+  factory Song.withId(String id, Song song) => song.copyWith(id: id);
 
   factory Song.fromJson(Map<String, dynamic> json) => _$SongFromJson(json);
 }

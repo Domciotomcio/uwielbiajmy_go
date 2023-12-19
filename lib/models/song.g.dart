@@ -7,14 +7,14 @@ part of 'song.dart';
 // **************************************************************************
 
 _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       title: json['title'] as String,
-      key: json['key'] as String,
-      artist: json['artist'] as String,
-      language: json['language'] as String,
-      tempo: json['tempo'] as String,
-      bpm: json['bpm'] as int,
-      songbookNumber: json['songbookNumber'] as String,
+      key: json['key'] as String?,
+      artist: json['artist'] as String?,
+      language: json['language'] as String?,
+      tempo: json['tempo'] as String?,
+      bpm: json['bpm'] as int?,
+      songbookNumber: json['songbookNumber'] as String?,
       sections:
           (json['sections'] as List<dynamic>).map((e) => e as String).toList(),
       lyrics: (json['lyrics'] as Map<String, dynamic>).map(
