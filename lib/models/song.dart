@@ -13,7 +13,7 @@ class Song with _$Song {
     String? artist,
     String? language,
     String? tempo,
-    int? bpm,
+    String? bpm,
     String? songbookNumber,
     required List<String> sections,
     required Map<String, List<String>> lyrics,

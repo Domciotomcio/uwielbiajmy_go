@@ -15,7 +15,7 @@ class SongsServiceMock implements SongsService {
           artist: "Hillsong",
           language: "english",
           tempo: "medium",
-          bpm: 68,
+          bpm: "68",
           songbookNumber: "1",
           sections: [
             "Intro",
@@ -124,7 +124,7 @@ class SongsServiceMock implements SongsService {
           key: "C",
           language: "polish",
           tempo: "medium",
-          bpm: 68,
+          bpm: "68",
           sections: [
             "Intro",
             "Verse 1",

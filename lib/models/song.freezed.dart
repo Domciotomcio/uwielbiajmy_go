@@ -26,7 +26,7 @@ mixin _$Song {
   String? get artist => throw _privateConstructorUsedError;
   String? get language => throw _privateConstructorUsedError;
   String? get tempo => throw _privateConstructorUsedError;
-  int? get bpm => throw _privateConstructorUsedError;
+  String? get bpm => throw _privateConstructorUsedError;
   String? get songbookNumber => throw _privateConstructorUsedError;
   List<String> get sections => throw _privateConstructorUsedError;
   Map<String, List<String>> get lyrics => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $SongCopyWith<$Res> {
       String? artist,
       String? language,
       String? tempo,
-      int? bpm,
+      String? bpm,
       String? songbookNumber,
       List<String> sections,
       Map<String, List<String>> lyrics,
@@ -109,7 +109,7 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
       bpm: freezed == bpm
           ? _value.bpm
           : bpm // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       songbookNumber: freezed == songbookNumber
           ? _value.songbookNumber
           : songbookNumber // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ abstract class _$$SongImplCopyWith<$Res> implements $SongCopyWith<$Res> {
       String? artist,
       String? language,
       String? tempo,
-      int? bpm,
+      String? bpm,
       String? songbookNumber,
       List<String> sections,
       Map<String, List<String>> lyrics,
@@ -201,7 +201,7 @@ class __$$SongImplCopyWithImpl<$Res>
       bpm: freezed == bpm
           ? _value.bpm
           : bpm // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       songbookNumber: freezed == songbookNumber
           ? _value.songbookNumber
           : songbookNumber // ignore: cast_nullable_to_non_nullable
@@ -257,7 +257,7 @@ class _$SongImpl with DiagnosticableTreeMixin implements _Song {
   @override
   final String? tempo;
   @override
-  final int? bpm;
+  final String? bpm;
   @override
   final String? songbookNumber;
   final List<String> _sections;
@@ -365,7 +365,7 @@ abstract class _Song implements Song {
       final String? artist,
       final String? language,
       final String? tempo,
-      final int? bpm,
+      final String? bpm,
       final String? songbookNumber,
       required final List<String> sections,
       required final Map<String, List<String>> lyrics,
@@ -386,7 +386,7 @@ abstract class _Song implements Song {
   @override
   String? get tempo;
   @override
-  int? get bpm;
+  String? get bpm;
   @override
   String? get songbookNumber;
   @override

@@ -13,7 +13,7 @@ _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
       artist: json['artist'] as String?,
       language: json['language'] as String?,
       tempo: json['tempo'] as String?,
-      bpm: json['bpm'] as int?,
+      bpm: json['bpm'] as String?,
       songbookNumber: json['songbookNumber'] as String?,
       sections:
           (json['sections'] as List<dynamic>).map((e) => e as String).toList(),
