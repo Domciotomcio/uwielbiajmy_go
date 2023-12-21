@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uwielbiajmy_go/models/song.dart';
+import 'package:uwielbiajmy_go/providers/song_controller.dart';
 
-class CreateSongPage extends StatefulWidget {
+class CreateSongPage extends ConsumerStatefulWidget {
   const CreateSongPage({super.key});
 
   @override
-  State<CreateSongPage> createState() => _MyCreateSongPageState();
+  ConsumerState<CreateSongPage> createState() => _MyCreateSongPageState();
 }
 
-class _MyCreateSongPageState extends State<CreateSongPage> {
+class _MyCreateSongPageState extends ConsumerState<CreateSongPage> {
+  Future<void>? _addingSong;
+
   String title = '';
 
   final _formKey = GlobalKey<FormState>();
@@ -70,93 +73,122 @@ class _MyCreateSongPageState extends State<CreateSongPage> {
       appBar: AppBar(
         title: const Text('Dodaj piosenkę'),
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      onChanged: (value) => setState(() => title = value),
-                      decoration: const InputDecoration(
-                        labelText: 'Title',
-                      ),
-                      validator: (value) => stringValidator(value!),
-                    ),
-                  ),
-                ),
-                // for key, tempo, artist, language, bpm, songbookNumber
-                ...buildTextFormFields(),
-
-                for (var section in sections) ...[
-                  const Divider(height: 30),
-                  section,
-                ],
-                const SizedBox(
-                  height: 10.0,
-                ),
-                ElevatedButton(
-                  onPressed: () => setState(() {
-                    print("akcja");
-                    addNewSection();
-                    print(sections.length);
-                  }),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 40),
-                  ),
-                  child: const Text('Dodaj sekcję'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-
-            List<String> mySections = [];
-            Map<String, List<String>> myLyrics = {};
-            Map<String, List<String>> myChords = {};
-
-            for (var section in sections) {
-              mySections.add(section.title);
-              myLyrics[section.title] = section.text;
-              myChords[section.title] = section.chords;
-            }
-
-            if (_sectionTitleControllers['bpm'] == null) {
-              print('bpm is null');
-              _sectionTitleControllers['bpm'] = '0';
-            }
-
-            var song = Song(
-              title: title,
-              key: _sectionTitleControllers['key'],
-              artist: _sectionTitleControllers['artist'],
-              language: _sectionTitleControllers['language'],
-              tempo: _sectionTitleControllers['tempo'],
-              bpm: _sectionTitleControllers['bpm'],
-              songbookNumber: _sectionTitleControllers['songbookNumber'],
-              sections: mySections,
-              lyrics: myLyrics,
-              chords: myChords,
+      body: MainView(buildTextFormFields),
+      floatingActionButton: FutureBuilder(
+        future: _addingSong,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.check),
+              label: const Text('Dodano piosenkę'),
             );
-            // Handle song creation logic
-            print('Creating song: $song');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
           } else {
-            print('Form is not valid');
+            return FloatingActionButton.extended(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+
+                  List<String> mySections = [];
+                  Map<String, List<String>> myLyrics = {};
+                  Map<String, List<String>> myChords = {};
+
+                  for (var section in sections) {
+                    mySections.add(section.title);
+                    myLyrics[section.title] = section.text;
+                    myChords[section.title] = section.chords;
+                  }
+
+                  if (_sectionTitleControllers['bpm'] == null) {
+                    _sectionTitleControllers['bpm'] = '0';
+                  }
+
+                  var song = Song(
+                    title: title,
+                    key: _sectionTitleControllers['key'],
+                    artist: _sectionTitleControllers['artist'],
+                    language: _sectionTitleControllers['language'],
+                    tempo: _sectionTitleControllers['tempo'],
+                    bpm: _sectionTitleControllers['bpm'],
+                    songbookNumber: _sectionTitleControllers['songbookNumber'],
+                    sections: mySections,
+                    lyrics: myLyrics,
+                    chords: myChords,
+                  );
+                  // Handle song creation logic
+                  print('Creating song: $song');
+
+                  final future =
+                      ref.read(songControllerProvider.notifier).addSong(song);
+
+                  setState(() {
+                    _addingSong = future;
+                  });
+                } else {
+                  print('Form is not valid');
+                }
+              },
+              icon: const Icon(Icons.add),
+              label: const Text('Dodaj piosenkę'),
+            );
           }
         },
-        label: const Text('Stwórz piosenkę'),
+      ),
+    );
+  }
+
+  Form MainView(List<Widget> Function() buildTextFormFields) {
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    onChanged: (value) => setState(() => title = value),
+                    decoration: const InputDecoration(
+                      labelText: 'Title',
+                    ),
+                    validator: (value) => stringValidator(value!),
+                  ),
+                ),
+              ),
+              // for key, tempo, artist, language, bpm, songbookNumber
+              ...buildTextFormFields(),
+
+              for (var section in sections) ...[
+                const Divider(height: 30),
+                section,
+              ],
+              const SizedBox(
+                height: 10.0,
+              ),
+              ElevatedButton(
+                onPressed: () => setState(() {
+                  print("akcja");
+                  addNewSection();
+                  print(sections.length);
+                }),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 40),
+                ),
+                child: const Text('Dodaj sekcję'),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

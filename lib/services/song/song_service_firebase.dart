@@ -24,9 +24,15 @@ class SongServiceFirebase implements SongService {
   }
 
   @override
-  Future<bool> addSong(Song song) {
-    // TODO: implement addSong
-    throw UnimplementedError();
+  Future<bool> addSong(Song song) async {
+    try {
+      final songData = song.toJson();
+      FirebaseFirestore.instance.collection('songs').add(songData);
+      return true;
+    } catch (e) {
+      log('Error while adding song: $e');
+      return false;
+    }
   }
 
   @override

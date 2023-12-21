@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uwielbiajmy_go/providers/song_controller.dart';
 import '../models/song.dart';
 import '../providers/song_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,7 @@ class SongbookPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final songList = ref.watch(songListProvider);
 
+    //FIX IT!!!
     return songList.when(
       data: (songs) => _SongList(songs: songs),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -21,31 +23,38 @@ class SongbookPage extends ConsumerWidget {
   }
 }
 
-class _SongList extends StatelessWidget {
+class _SongList extends ConsumerWidget {
   const _SongList({Key? key, required this.songs}) : super(key: key);
 
   final List<Song> songs;
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: songs.length,
-      separatorBuilder: (context, index) => const Divider(),
-      itemBuilder: (context, index) {
-        final song = songs[index];
-        return ListTile(
-          leading: Text(song.songbookNumber ?? '',
-              style: Theme.of(context).textTheme.titleMedium),
-          title: Text(song.title),
-          subtitle: song.artist != null ? Text(song.artist!) : null,
-          trailing: Text(song.key ?? ''),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SongPage(song: song)),
-            );
-          },
-        );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.read(songControllerProvider.notifier).getSongs();
+        //await Future.delayed(const Duration(seconds: 2));
+        //await context.read(songControllerProvider.notifier).getSongs();
       },
+      child: ListView.separated(
+        itemCount: songs.length,
+        separatorBuilder: (context, index) => const Divider(),
+        itemBuilder: (context, index) {
+          final song = songs[index];
+          return ListTile(
+            leading: Text(song.songbookNumber ?? '',
+                style: Theme.of(context).textTheme.titleMedium),
+            title: Text(song.title),
+            subtitle: song.artist != null ? Text(song.artist!) : null,
+            trailing: Text(song.key ?? ''),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => SongPage(song: song)),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
