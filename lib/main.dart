@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:uwielbiajmy_go/views/my_create_song_page.dart';
+import 'package:uwielbiajmy_go/views/create_song_page.dart';
 import 'firebase_options.dart';
 
 import 'constants/destinations.dart';
@@ -48,25 +48,24 @@ class MyApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: MyCreateSongPage(),
-      // home: Scaffold(
-      //   appBar: AppBar(
-      //     title: Text(title),
-      //     actions: [
-      //       IconButton(
-      //         onPressed: () {},
-      //         icon: const Icon(Icons.connect_without_contact),
-      //       ),
-      //     ],
-      //   ),
-      //   body: PageView(
-      //     controller: pageController,
-      //     children: pages,
-      //   ),
-      //   floatingActionButton: floatingActionButton,
-      //   floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      //   bottomNavigationBar: const CustomNavigationBar(),
-      // ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.connect_without_contact),
+            ),
+          ],
+        ),
+        body: PageView(
+          controller: pageController,
+          children: pages,
+        ),
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: const CustomNavigationBar(),
+      ),
     );
   }
 }

@@ -57,9 +57,8 @@ class SongbookFloatingActionButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
         onPressed: () {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => CreateSongPage()));
-          // print("Dodaj piosenkę");
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const CreateSongPage()));
         },
         child: const Icon(Icons.add));
   }

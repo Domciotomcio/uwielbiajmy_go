@@ -1,287 +1,250 @@
-// import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uwielbiajmy_go/models/song.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:uwielbiajmy_go/models/music_section_model.dart';
+class CreateSongPage extends StatefulWidget {
+  const CreateSongPage({super.key});
 
-// import '../models/song.dart';
+  @override
+  State<CreateSongPage> createState() => _MyCreateSongPageState();
+}
 
-// // riverpod provider for sections
-// final sectionsProvider = StateProvider<List<MyMusicSection>>((ref) => []);
+class _MyCreateSongPageState extends State<CreateSongPage> {
+  String title = '';
 
-// class CreateSongPage extends StatefulWidget {
-//   const CreateSongPage({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
 
-//   @override
-//   _CreateSongPageState createState() => _CreateSongPageState();
-// }
+  // optional controllers
+  final Map<String, String> _sectionTitleControllers = {
+    "key": '',
+    "artist": '',
+    "language": '',
+    "tempo": '',
+    "bpm": '',
+    "songbookNumber": '',
+  };
 
-// class _CreateSongPageState extends State<CreateSongPage> {
-//   final _formKey = GlobalKey<FormState>();
+  final List<SectionWidget> sections = [];
 
-//   // required controllers
-//   final TextEditingController _titleController = TextEditingController();
+  void removeSection(Key key) {
+    setState(() {
+      sections.removeWhere((widget) => widget.key == key);
+    });
+  }
 
-//   // optional controllers
-//   final Map<String, TextEditingController> _sectionTitleControllers = {
-//     'key': TextEditingController(),
-//     'artist': TextEditingController(),
-//     'language': TextEditingController(),
-//     'tempo': TextEditingController(),
-//     'bpm': TextEditingController(),
-//     'songbookNumber': TextEditingController(),
-//   };
+  void addNewSection() {
+    final Key newKey = UniqueKey();
 
-//   void _addNewSection() {
-//     final sections = context.read(sectionsProvider);
-//   }
+    sections.add(
+      SectionWidget(
+        key: newKey,
+        onRemove: () {
+          removeSection(newKey);
+        },
+      ),
+    );
+  }
 
-//   void _removeSection(int index) {
-//     setState(() {
-//       _sections.removeWhere((element) => element.index == index);
-//     });
-//   }
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> buildTextFormFields() {
+      return _sectionTitleControllers.keys.map((String key) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: key,
+            ),
+            onChanged: (value) {
+              setState(() {
+                _sectionTitleControllers[key] = value;
+              });
+            },
+          ),
+        );
+      }).toList();
+    }
 
-//   @override
-//   void dispose() {
-//     _titleController.dispose();
-//     super.dispose();
-//   }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dodaj piosenkę'),
+      ),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      onChanged: (value) => setState(() => title = value),
+                      decoration: const InputDecoration(
+                        labelText: 'Title',
+                      ),
+                      validator: (value) => stringValidator(value!),
+                    ),
+                  ),
+                ),
+                // for key, tempo, artist, language, bpm, songbookNumber
+                ...buildTextFormFields(),
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Stwórz piosenkę'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Form(
-//           key: _formKey,
-//           child: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 _BasicInfoWidget(
-//                   titleController: _titleController,
-//                 ),
-//                 for (var section in _sections) ...[
-//                   const Divider(),
-//                   section,
-//                 ],
-//                 Row(
-//                   children: [
-//                     ElevatedButton(
-//                       onPressed: () {
-//                         _addNewSection();
-//                       },
-//                       child: const Text('Dodaj sekcję'),
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton.extended(
-//         onPressed: () {
-//           if (_formKey.currentState!.validate()) {
-//             var song = Song(
-//               title: _titleController.text,
-//               sections: [],
-//               lyrics: {},
-//               chords: {},
-//             );
-//             // Handle song creation logic
-//             print('Creating song: $song');
-//           } else {
-//             print('Form is not valid');
-//           }
-//         },
-//         label: const Text('Stwórz piosenkę'),
-//       ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-//     );
-//   }
-// }
+                for (var section in sections) ...[
+                  const Divider(height: 30),
+                  section,
+                ],
+                const SizedBox(
+                  height: 10.0,
+                ),
+                ElevatedButton(
+                  onPressed: () => setState(() {
+                    print("akcja");
+                    addNewSection();
+                    print(sections.length);
+                  }),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 40),
+                  ),
+                  child: const Text('Dodaj sekcję'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
 
-// class _BasicInfoWidget extends StatelessWidget {
-//   const _BasicInfoWidget({
-//     required TextEditingController titleController,
-//   }) : _titleController = titleController;
+            List<String> mySections = [];
+            Map<String, List<String>> myLyrics = {};
+            Map<String, List<String>> myChords = {};
 
-//   final TextEditingController _titleController;
+            for (var section in sections) {
+              mySections.add(section.title);
+              myLyrics[section.title] = section.text;
+              myChords[section.title] = section.chords;
+            }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           children: [
-//             TextFormField(
-//               controller: _titleController,
-//               decoration: const InputDecoration(labelText: 'Tytuł'),
-//               validator: (value) => stringValidator(value!),
-//             ),
-//             Row(
-//               children: [
-//                 Expanded(
-//                   flex: 3,
-//                   child: TextFormField(
-//                     decoration: const InputDecoration(labelText: 'Autor'),
-//                   ),
-//                 ),
-//                 const SizedBox(width: 16.0),
-//                 Expanded(
-//                   flex: 1,
-//                   child: TextFormField(
-//                     decoration: const InputDecoration(labelText: 'Tonacja'),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+            if (_sectionTitleControllers['bpm'] == null) {
+              print('bpm is null');
+              _sectionTitleControllers['bpm'] = '0';
+            }
 
-// // class _Section extends StatefulWidget {
-// //   final int index;
-// //   final Function onDelete;
+            var song = Song(
+              title: title,
+              key: _sectionTitleControllers['key'],
+              artist: _sectionTitleControllers['artist'],
+              language: _sectionTitleControllers['language'],
+              tempo: _sectionTitleControllers['tempo'],
+              bpm: _sectionTitleControllers['bpm'],
+              songbookNumber: _sectionTitleControllers['songbookNumber'],
+              sections: mySections,
+              lyrics: myLyrics,
+              chords: myChords,
+            );
+            // Handle song creation logic
+            print('Creating song: $song');
+          } else {
+            print('Form is not valid');
+          }
+        },
+        label: const Text('Stwórz piosenkę'),
+      ),
+    );
+  }
+}
 
-// //   const MusicSection({super.key, required this.index, required this.onDelete});
+class SectionWidget extends StatelessWidget {
+  final VoidCallback onRemove;
 
-// //   @override
-// //   State<MusicSection> createState() => _MusicSectionState();
-// // }
+  String title = '';
+  List<String> text = [];
+  List<String> chords = [];
 
-// // class _SectionWidget extends StatelessWidget{
-// //   final int index;
-// //   final Function onDelete;
+  void saveText(String value) {
+    text = value.split('\n');
+  }
 
-// //   final TextEditingController titleController = TextEditingController();
-// //   final TextEditingController lyricsController = TextEditingController();
-// //   final TextEditingController chordsController = TextEditingController();
+  void saveChords(String value) {
+    chords = value.split('\n');
+  }
 
-// //   @override
-// //   void dispose() {
-// //     titleController.dispose();
-// //     lyricsController.dispose();
-// //     chordsController.dispose();
-// //     super.dispose();
-// //   }
+  SectionWidget({
+    super.key,
+    required this.onRemove,
+  });
 
-// //   MusicSectionModel get model {
-// //     var lyricsList = lyricsController.text.split('\n');
-// //     var chordsList = chordsController.text.split('\n');
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Card(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Tytuł sekcji',
+                    ),
+                    validator: (value) => stringValidator(value!),
+                    onSaved: (newValue) => title = newValue!,
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () => onRemove(),
+              icon: const Icon(Icons.delete),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Tekst',
+                  ),
+                  onSaved: (newValue) => saveText(newValue!),
+                  maxLines: null,
+                ),
+              ),
+              const SizedBox(width: 10.0),
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Akordy',
+                  ),
+                  onSaved: (newValue) => saveChords(newValue!),
+                  maxLines: null,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
 
-// //     return MusicSectionModel(
-// //       title: titleController.text,
-// //       lyrics: lyricsList,
-// //       chords: chordsList,
-// //     );
-// //   }
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Card(
-// //       child: Padding(
-// //         padding: const EdgeInsets.all(8.0),
-// //         child: Column(
-// //           crossAxisAlignment: CrossAxisAlignment.start,
-// //           children: <Widget>[
-// //             Row(
-// //               children: [
-// //                 Expanded(
-// //                   flex: 3,
-// //                   child: TextFormField(
-// //                     controller: titleController,
-// //                     decoration: const InputDecoration(
-// //                       labelText: 'Nazwa Sekcji',
-// //                     ),
-// //                     validator: (value) => stringValidator(value!),
-// //                   ),
-// //                 ),
-// //                 Expanded(
-// //                   flex: 2,
-// //                   child: Container(
-// //                     alignment: Alignment.centerRight,
-// //                     child: IconButton(
-// //                       onPressed: () {
-// //                         widget.onDelete();
-// //                       },
-// //                       icon: const Icon(Icons.delete),
-// //                     ),
-// //                   ),
-// //                 ),
-// //               ],
-// //             ),
-// //             const SizedBox(height: 8.0),
-// //             Row(
-// //               crossAxisAlignment: CrossAxisAlignment.start,
-// //               children: [
-// //                 Expanded(
-// //                   flex: 3,
-// //                   child: TextFormField(
-// //                     controller: lyricsController,
-// //                     decoration: const InputDecoration(
-// //                       labelText: 'Słowa',
-// //                     ),
-// //                     maxLines: null, // Allows multiple lines
-// //                   ),
-// //                 ),
-// //                 const SizedBox(width: 8.0),
-// //                 Expanded(
-// //                   flex: 2,
-// //                   child: TextFormField(
-// //                     controller: chordsController,
-// //                     decoration: const InputDecoration(
-// //                       labelText: 'Chwyty',
-// //                     ),
-// //                     maxLines: null, // Allows multiple lines
-// //                   ),
-// //                 ),
-// //               ],
-// //             ),
-// //           ],
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
-
-// String? stringValidator(String value) {
-//   if (value.isEmpty) {
-//     return 'Brak tekstu';
-//   }
-//   return null;
-// }
-
-// class MyMusicSection extends StatelessWidget {
-//   final int index;
-
-//   final TextEditingController titleController = TextEditingController();
-//   final TextEditingController lyricsController = TextEditingController();
-//   final TextEditingController chordsController = TextEditingController();
-
-//   MyMusicSection({super.key, required this.index});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Text("Something $index"),
-//         IconButton(
-//           onPressed: () {
-//             // widget.onDelete();
-//           },
-//           icon: const Icon(Icons.delete),
-//         ),
-//       ],
-//     );
-//   }
-// }
+String? stringValidator(String value) {
+  if (value.isEmpty) {
+    return 'Brak tekstu';
+  }
+  return null;
+}
