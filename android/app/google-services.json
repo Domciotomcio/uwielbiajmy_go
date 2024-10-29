@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001618673211",
+    "project_id": "uwielbiajmy-go-82c73",
+    "storage_bucket": "uwielbiajmy-go-82c73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001618673211:android:f38a0feccdd6d68681561e",
+        "android_client_info": {
+          "package_name": "com.example.uwielbiajmy_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAULIn6X-rnKylAgzk4cYo2zTPUV1aQtrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
